@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Member Information</h1>
+<hr>
+
+<table border="1">
+	<tr>
+		<th>번호</th>
+		<th>아이디</th>
+		<th>계좌번호</th>
+		<th>잔액</th>
+		<th>-</th>
+	</tr>
+	
+	<tr th:each="memInfo, status : ${memInfoList}">
+		<td th:text="${status.count}"></td>
+		<!-- <td th:text="${memInfo.member_id}"></td> -->
+		<td th:text="${memInfo.username}"></td>
+		<td th:text="${memInfo.accountNumber}"></td>
+		<td th:text="${memInfo.balance}"></td>
+		<td><button onclick="freeze()">계좌 동결</button></td>
+	</tr>	
+</table>
+
+
+<script>
+	function freeze(){
+		
+		
+		
+	}
+
+</script>
+</body>
+</html>

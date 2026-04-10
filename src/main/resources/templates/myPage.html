@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>MyPage</h1>
+<hr>
+
+잔액: <span id="balance"></span>
+
+
+<table border="1">
+	<tr>
+		<th>거래번호</th>
+		<th>보내는이</th>
+		<th>받는이</th>
+		<th>송금금액</th>
+		<th>타입</th>
+	</tr>
+	
+	<tbody id="tbody">
+	
+	</tbody>
+</table>
+
+<script>
+	
+	window.onload = function(){
+		const token = localStorage.getItem("accessToken");
+		const balance = document.getElementById("balance");
+		const tbody = document.getElementById("tbody");
+		
+		fetch("/api/member/myPage", {
+			headers : {"Authorization" : "Bearer " + token}
+		})
+		.then(res => res.json())
+		.then(data => {
+			
+			balance.innerHTML = data.balance;
+			
+			data.tranList.forEach(tran => {
+				tbody.innerHTML += `
+				<tr>
+					<td>${tran.id}</td>
+					<td>${tran.senderAccount}</td>
+		            <td>${tran.receiverAccount}</td>
+		            <td>${tran.amount}</td>
+		            <td>${tran.type}</td>
+		        </tr>
+		        `;
+		    });
+		})
+	}
+
+</script>
+
+
+</body>
+</html>

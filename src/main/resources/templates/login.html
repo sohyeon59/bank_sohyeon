@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Login Page</h1>
+<hr>
+
+<form action="/join" method="post">
+	<input type="text" name="username" id="username" placeholder="username"><br>
+	<input type="password" name="password" id="password" placeholder="password"><br>
+	<button type="button" onclick="login()">로그인</button>
+</form>
+
+<div th:text="${msg}"></div>
+
+<script>
+
+	function login(){
+		
+		const username = document.getElementById("username").value
+		const password = document.getElementById("password").value
+		
+		fetch("/login", {
+			method : "post",
+			headers : {
+				"Content-Type" : "application/json"
+			},
+			body : JSON.stringify({
+				username : username,
+				password : password
+			})
+		})
+		.then(res => res.json())
+		.then(data => {
+			console.log("success");
+			alert(data.message);
+			if(data.token){
+				console.log(data.token);
+				localStorage.setItem("accessToken", data.token);
+				location.href = "/";
+			}
+		})
+		.catch(err => alert(err.message));
+	}
+	
+
+</script>
+
+
+</body>
+</html>

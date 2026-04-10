@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<h1>Index Page</h1>
+<hr>
+
+<h4>비회원</h4>
+<a href="/joinForm">회원가입</a>
+<a href="/loginForm">로그인</a>
+<a href="/notice">공지사항</a>
+
+<h4>회원</h4>
+<button onclick="mypage()">마이페이지</button>
+<button onclick="depositPage()">입금</button>
+<button onclick="transferPage()">송금</button>
+
+<h4>관리자</h4>
+<button onclick="adminPage()">관리자 페이지</button>
+
+<script>
+
+	function mypage(){
+		const token = localStorage.getItem("accessToken");
+		fetch("/api/member/myPage", {
+			headers : {"Authorization" : "Bearer " + token}
+		})
+		.then(res => res.text())
+		.then(data => {
+			if(data != ""){
+				console.log(data)
+				location.href="/member/myPage";
+			}else{
+				alert("토큰 오류 !!")
+				location.href="/loginForm";
+			}
+		});
+	}
+
+
+	function depositPage(){
+		const token = localStorage.getItem("accessToken");
+		fetch("/api/banking/depositPage", {
+			headers : {"Authorization" : "Bearer " + token}
+		})
+		.then(res => res.text())
+		.then(data => {
+			if(data != ""){
+				console.log(data)
+				location.href="/banking/depositPage";
+			}else{
+				alert("토큰 오류 !!")
+				location.href="/loginForm";
+			}
+		});
+	}
+	
+	function transferPage(){
+		const token = localStorage.getItem("accessToken");
+		fetch("/api/banking/transferPage", {
+			headers : {"Authorization" : "Bearer " + token}
+		})
+		.then(res => res.text())
+		.then(data => {
+			if(data != ""){
+				location.href="/banking/transferPage";
+			}else{
+				alert("토큰 오류 !!")
+				location.href="/loginForm";
+			}
+		});
+	}
+	
+	function adminPage(){
+		const token = localStorage.getItem("accessToken");
+		fetch("/api/admin/adminPage", {
+			headers : {"Authorization" : "Bearer " + token}
+		})
+		.then(res => res.text())
+		.then(data => {
+			if(data != ""){
+				location.href="/admin/adminPage";
+			}else{
+				alert("관리자만 이용 가능합니다.")  // 역할 설정하기 ..
+			}
+		});
+	}
+	
+
+
+</script>
+
+</body>
+</html>
