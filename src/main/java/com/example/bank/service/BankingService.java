@@ -67,7 +67,7 @@ public class BankingService {
 	// 송금(내계좌출금, 상대방계좌입금)
 	@Transactional
 	public void transfer(String sender, String receiver, int amount) {
-		Account senderAccount = accountRepo.findByAccountNumber(receiver);
+		Account senderAccount = accountRepo.findByAccountNumber(sender);
 		Account receiverAccount = accountRepo.findByAccountNumber(receiver);
 		
 		if(senderAccount.getBalance() < amount) {		
